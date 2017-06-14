@@ -72,17 +72,17 @@ public class DictionaryImpl implements Dictionary{
 	}
 	
 	@Override
-	public Node hasWordsFrom(String prefix){
+	public boolean hasWordsFrom(String prefix){
 		log.info("finding words from : " + prefix);
 		Node n = root;
  		for(int i=0; i< prefix.length(); i++){
 			char charAt = prefix.charAt(i);
 			if(!n.getChildren().containsKey(charAt)){
-				return null;
+				return false;
 			}
 			n = n.getChildren().get(charAt);
 		}
-		return n;
+		return true;
 	}
 	
 	public String toString(){

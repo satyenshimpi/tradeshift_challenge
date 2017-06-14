@@ -12,9 +12,9 @@ public interface Dictionary {
 	/**
 	 * Check if there are words starting given prefix.
 	 * @param prefix
-	 * @return null if no word starting from prefix
+	 * @return true if word starting from prefix
 	 */
-	Node hasWordsFrom(String prefix);
+	boolean hasWordsFrom(String prefix);
 	
 	/**
 	 * Dictionary Node

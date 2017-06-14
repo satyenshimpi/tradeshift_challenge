@@ -62,12 +62,11 @@ public class WordsFinder {
 			sb.append(matrix[row][column]);
 			//check if there are any words starting the prefix
 			String prefix = sb.toString();
-			Dictionary.Node n = dict.hasWordsFrom(prefix.toLowerCase());
 			
 			//if words found
-			if( n != null){
+			if( dict.hasWordsFrom(prefix.toLowerCase()) ){
 				//check if the word found is complete word or not.
-				if(n.isCompleteWord()){
+				if(dict.isValidWord(prefix.toLowerCase())){
 					ret.add(prefix);
 				}
 			}else{
@@ -82,10 +81,9 @@ public class WordsFinder {
 		for(;row < matrix.length; row++){
 			sb.append(matrix[row][column]);
 			String prefix = sb.toString();
-			Dictionary.Node n = dict.hasWordsFrom(prefix.toLowerCase());
 			
-			if( n != null){
-				if(n.isCompleteWord()){
+			if( dict.hasWordsFrom(prefix.toLowerCase())){
+				if(dict.isValidWord(prefix.toLowerCase())){
 					ret.add(prefix);
 				}
 			}else{
