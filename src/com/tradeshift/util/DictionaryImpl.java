@@ -5,6 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * This is Trie implementation of Dictionary interface.
+ * We will store all words a lower case letters in this Dictionary
+ * @author Satyen Shimpi
+ */
 public class DictionaryImpl implements Dictionary{
 	Node root = new Node('*');
 	static Logger log = Logger.getLogger(DictionaryImpl.class.getName());
@@ -22,6 +27,20 @@ public class DictionaryImpl implements Dictionary{
 		}
  		//if the node has flag isCompleteWord, else its not a word
  		return n.isCompleteWord();
+	}
+	
+	@Override
+	public boolean hasWordsFrom(String prefix){
+		log.info("finding words from : " + prefix);
+		Node n = root;
+ 		for(int i=0; i< prefix.length(); i++){
+			char charAt = prefix.charAt(i);
+			if(!n.getChildren().containsKey(charAt)){
+				return false;
+			}
+			n = n.getChildren().get(charAt);
+		}
+		return true;
 	}
 	
 	/**
@@ -70,21 +89,11 @@ public class DictionaryImpl implements Dictionary{
 		}
 		return ret;
 	}
-	
+		
 	@Override
-	public boolean hasWordsFrom(String prefix){
-		log.info("finding words from : " + prefix);
-		Node n = root;
- 		for(int i=0; i< prefix.length(); i++){
-			char charAt = prefix.charAt(i);
-			if(!n.getChildren().containsKey(charAt)){
-				return false;
-			}
-			n = n.getChildren().get(charAt);
-		}
-		return true;
-	}
-	
+	/**
+	 * Overridden for debug purpose
+	 */
 	public String toString(){
 		StringBuilder sb = new StringBuilder("Dictionary{\n");
 		for(String s: getWords("", root)){

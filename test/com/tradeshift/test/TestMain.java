@@ -55,6 +55,11 @@ public class TestMain {
 		dict.addWord("bed");
 		dict.addWord("avid");
 		
+		//diagonally right
+		dict.addWord("jdsv");
+		//diagonally left
+		dict.addWord("faij");
+		
 		dict.addWord("cat");
 		dict.addWord("dog");
 		dict.addWord("bat");
