@@ -1,9 +1,12 @@
-package com.tradeshift.util;
+package com.tradeshift.impl;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
+
+import com.tradeshift.Dictionary;
 
 /**
  * This is Trie implementation of Dictionary interface.
@@ -16,7 +19,7 @@ public class DictionaryImpl implements Dictionary{
 	
 	@Override
 	public boolean isValidWord(String word) {
-		log.info("Finding word: " + word);
+		log.debug("Finding word: " + word);
 		Node n = root;
  		for(int i=0; i< word.length(); i++){
 			char charAt = word.charAt(i);
@@ -31,7 +34,7 @@ public class DictionaryImpl implements Dictionary{
 	
 	@Override
 	public boolean hasWordsFrom(String prefix){
-		log.info("finding words from : " + prefix);
+		log.debug("finding words from : " + prefix);
 		Node n = root;
  		for(int i=0; i< prefix.length(); i++){
 			char charAt = prefix.charAt(i);
@@ -43,10 +46,7 @@ public class DictionaryImpl implements Dictionary{
 		return true;
 	}
 	
-	/**
-	 * Insert word in a dictionary
-	 * @param str
-	 */
+	@Override
 	public void addWord(String str){
 		Node n = root;
 		str = str.toLowerCase();		// make all lowercase
@@ -59,8 +59,21 @@ public class DictionaryImpl implements Dictionary{
 		}
 		n.setCompleteWord(true);
 	}
+		
+	@Override
+	/**
+	 * Overridden for debug purpose
+	 */
+	public String toString(){
+		StringBuilder sb = new StringBuilder("Dictionary{\n");
+		for(String s: getWords("", root)){
+			sb.append("\t").append(s).append(",\n");
+		}
+		sb.append("}");
+		return sb.toString();
+	}
 	
-	public List<String> getWords(String prefix, Node n){
+	private List<String> getWords(String prefix, Node n){
  		for(int i=0; i< prefix.length(); i++){
 			char charAt = prefix.charAt(i);
 			if(!n.getChildren().containsKey(charAt)){
@@ -77,7 +90,7 @@ public class DictionaryImpl implements Dictionary{
 	 * @param n
 	 * @return
 	 */
-	public List<String> findWordsFrom(String prefix, Node n){
+	private List<String> findWordsFrom(String prefix, Node n){
 		List<String> ret = new LinkedList<String>();
 		if(n.isCompleteWord()){
 			ret.add(prefix);
@@ -88,18 +101,5 @@ public class DictionaryImpl implements Dictionary{
 			ret.addAll(tmp);
 		}
 		return ret;
-	}
-		
-	@Override
-	/**
-	 * Overridden for debug purpose
-	 */
-	public String toString(){
-		StringBuilder sb = new StringBuilder("Dictionary{\n");
-		for(String s: getWords("", root)){
-			sb.append("\t").append(s).append(",\n");
-		}
-		sb.append("}");
-		return sb.toString();
 	}
 }

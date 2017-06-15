@@ -4,29 +4,38 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import com.tradeshift.util.Constants;
-import com.tradeshift.util.Dictionary;
-import com.tradeshift.util.Helper;
 
 public class WordsFinder {
 	private static Logger log = Logger.getLogger(WordsFinder.class.getName());
+	
+	private Dictionary dict;
+	private List<String> wordsFound;
+	private Matrix matrix;
+	
+	public WordsFinder(Dictionary dict, Matrix matrix) {
+		this.dict = dict;
+		this.matrix = matrix;
+		this.wordsFound = new LinkedList<String>();
+	}
+
 	/**
 	 * Returns list of all words found in given string matrix
 	 * @param args
 	 * @return
 	 */
-	public static List<String> findWords(String[] args, Dictionary dict) {
+	public List<String> findWords() {
 		Set<String> ret = new HashSet<String>();
-		char[][] matrix = Helper.createMatrix(args);
-		Helper.printMatrix(matrix);
 		
 		//from each char in matrix, check if we can derive word horizontally , vertically and diagonally
 		//this will loop 'M x N' times for traverseAndSearchWords
-		for(int row=0; row< matrix.length; row++){
-			for(int column=0; column< matrix[row].length; column++){
-				ret.addAll(traverseAndSearchWords(matrix, row, column, dict));
+		for(int row=0; row< matrix.getRowCount(); row++){
+			for(int column=0; column< matrix.getColumnCount(row); column++){
+				traverseAndSearchWords(row, column);
+				ret.addAll(wordsFound);
 			}
 		}
 		return new LinkedList<String>(ret);
@@ -40,18 +49,16 @@ public class WordsFinder {
 	 * @param dict Use this dictionary
 	 * @return words Found a List
 	 */
-	private static List<String> traverseAndSearchWords(char[][] matrix, int row, int column, Dictionary dict) {
-		log.info("Searching word row:" + row + " , column:"+ column);
-		List<String> ret = new LinkedList<String>();
+	private void traverseAndSearchWords(int row, int column) {
+		log.debug("Searching word row:" + row + " , column:"+ column);
 
 		//for horizontal traverse max complexity is O(M)
-		traverseHorizontally(matrix, row, column, dict, ret);
+		traverseHorizontally(row, column);
 		//for vertical traverse max complexity is O(N)
-		traverseVertically(matrix, row, column, dict, ret);
+		traverseVertically(row, column);
 		
-		traverseDiagonallyLeft(matrix, row, column, dict, ret);
-		traverseDiagonallyRight(matrix, row, column, dict, ret);
-		return ret;
+		traverseDiagonallyLeft(row, column);
+		traverseDiagonallyRight(row, column);
 	}
 
 	/**
@@ -62,11 +69,11 @@ public class WordsFinder {
 	 * @param dict Use this dictionary
 	 * @param wordsFound add words to this list
 	 */
-	private static void traverseHorizontally(char[][] matrix, int row, int column, Dictionary dict, List<String> wordsFound) {
+	private void traverseHorizontally(int row, int column) {
 		StringBuilder prefixBuilder = new StringBuilder();
 		
-		for(;column < matrix[row].length; column++){
-			if(!checkPrefixAndContinue(matrix, row, column, dict, wordsFound, prefixBuilder)) break;
+		for(;column < matrix.getColumnCount(row); column++){
+			if(!checkPrefixAndContinue(row, column, prefixBuilder)) break;
 		}
 	}
 
@@ -80,8 +87,8 @@ public class WordsFinder {
 	 * @param prefixBuilder StringBuilder with prefix String found so far
 	 * @return true if we need to continue checking next char
 	 */
-	private static boolean checkPrefixAndContinue(char[][] matrix, int row, int column, Dictionary dict, List<String> wordsFound, StringBuilder prefixBuilder) {
-		prefixBuilder.append(matrix[row][column]);
+	private boolean checkPrefixAndContinue(int row, int column, StringBuilder prefixBuilder) {
+		prefixBuilder.append(matrix.charAt(row, column));
 		//check if there are any words starting the prefix
 		String prefix = prefixBuilder.toString();
 		
@@ -98,32 +105,32 @@ public class WordsFinder {
 			}
 			return true;
 		}else{
-			log.info("No words starting from: " + prefix);
+			log.debug("No words starting from: " + prefix);
 			return false;
 		}
 	}
 
-	private static void traverseVertically(char[][] matrix, int row, int column, Dictionary dict, List<String> wordsFound) {
+	private void traverseVertically(int row, int column) {
 		StringBuilder prefixBuilder = new StringBuilder();
 		
-		for(;row < matrix.length; row++){
-			if(!checkPrefixAndContinue(matrix, row, column, dict, wordsFound, prefixBuilder)) break;
+		for(;row < matrix.getRowCount(); row++){
+			if(!checkPrefixAndContinue(row, column, prefixBuilder)) break;
 		}
 	}
 	
-	private static void traverseDiagonallyRight(char[][] matrix, int row, int column, Dictionary dict, List<String> wordsFound) {	
+	private void traverseDiagonallyRight(int row, int column) {	
 		StringBuilder prefixBuilder = new StringBuilder();
 		
-		for(;row < matrix.length && column < matrix[row].length; row++, column++){
-			if(!checkPrefixAndContinue(matrix, row, column, dict, wordsFound, prefixBuilder)) break;
+		for(;row < matrix.getRowCount() && column < matrix.getColumnCount(row); row++, column++){
+			if(!checkPrefixAndContinue(row, column, prefixBuilder)) break;
 		}
 	}
 
-	private static void traverseDiagonallyLeft(char[][] matrix, int row, int column, Dictionary dict, List<String> wordsFound) {
+	private void traverseDiagonallyLeft(int row, int column) {
 		StringBuilder prefixBuilder = new StringBuilder();
 		
-		for(;row < matrix.length && column > 0; row++, column--){
-			if(!checkPrefixAndContinue(matrix, row, column, dict, wordsFound, prefixBuilder)) break;
+		for(;row < matrix.getRowCount() && column > 0; row++, column--){
+			if(!checkPrefixAndContinue(row, column, prefixBuilder)) break;
 		}
 	}
 }

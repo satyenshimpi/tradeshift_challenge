@@ -1,6 +1,14 @@
 package com.tradeshift.util;
 
+import com.tradeshift.Matrix;
+import com.tradeshift.impl.MatrixImpl;
+
 public class Helper {
+	
+	public static Matrix getMatrixInstance(String[] puzzle){
+		return new MatrixImpl(puzzle);
+	}
+
 	/**
 	 * Converts String array to char[][] Matrix
 	 * @param arr String array
@@ -17,27 +25,13 @@ public class Helper {
 	 * Prints matrix. For debug purpose
 	 * @param matrix
 	 */
-	public static void printMatrix(char[][] matrix){
+	public static void printMatrix(Matrix matrix){
 		System.out.println("the char matrix");
-		for(int i=0; i< matrix.length; i++){
-			for(int j=0; j< matrix[i].length; j++){
-				System.out.print(matrix[i][j] + " ");
+		for(int i=0; i< matrix.getRowCount(); i++){
+			for(int j=0; j< matrix.getColumnCount(i); j++){
+				System.out.print(matrix.charAt(i, j) + " ");
 			}
 			System.out.print("\n");
 		}
 	}
-	
-//	/**
-//	 * Prints matrix by swapping rows with columns
-//	 * @param matrix
-//	 */
-//	public static void printMatrixSwapped(char[][] matrix){
-//		System.out.println("the char matrix");
-//		for(int i=0; i< matrix[i].length; i++){
-//			for(int j=0; j< matrix.length; j++){
-//				System.out.print(matrix[j][i] + " ");
-//			}
-//			System.out.print("\n");
-//		}
-//	}
 }

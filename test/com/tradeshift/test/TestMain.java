@@ -1,15 +1,16 @@
 package com.tradeshift.test;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
-import java.util.logging.Logger;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.tradeshift.Matrix;
 import com.tradeshift.WordsFinder;
-import com.tradeshift.util.DictionaryImpl;
+import com.tradeshift.impl.DictionaryImpl;
+import com.tradeshift.util.Helper;
 
 public class TestMain {
 	static Logger log = Logger.getLogger(TestMain.class.getName());
@@ -55,11 +56,20 @@ public class TestMain {
 		dict.addWord("bed");
 		dict.addWord("avid");
 		
-		//diagonally right
-		dict.addWord("jdsv");
-		//diagonally left
-		dict.addWord("faij");
+		//diagonally right words
+		dict.addWord("nav");
+		dict.addWord("did");
+		dict.addWord("bia");
+		dict.addWord("ide");
+
+		//diagonally left words
+		dict.addWord("dad");
+		dict.addWord("add");
+		dict.addWord("via");
+		dict.addWord("en");
+		dict.addWord("babe");
 		
+		//words for other basic puzzles
 		dict.addWord("cat");
 		dict.addWord("dog");
 		dict.addWord("bat");
@@ -70,6 +80,9 @@ public class TestMain {
 	
 	@Before
 	public void setUp(){
+		//log4j config basic
+		BasicConfigurator.configure();
+		
 		System.setProperty("java.util.logging.SimpleFormatter.format", 
 	            //"%1$tF %1$tT %4$s %2$s "+ 
 				"%5$s%6$s%n");
@@ -77,9 +90,14 @@ public class TestMain {
 	
 	@Test
 	public void testWordsFinderBase() {
-		log.info(dict.toString());
-		List<String> lst = WordsFinder.findWords(DEFAULT_PUZZLE, dict);
-		log.info("Words found as below");
+		log.debug(dict.toString());
+		Matrix matrix = Helper.getMatrixInstance(DEFAULT_PUZZLE);
+		Helper.printMatrix(matrix);
+		
+		WordsFinder wf = new WordsFinder(dict, matrix);
+		List<String> lst = wf.findWords();
+		
+		log.debug("\n\n\n----Following words found in the given Matrix------\n");
 		for(String s : lst){
 			log.info(s);
 		}
@@ -87,6 +105,6 @@ public class TestMain {
 	
 //	@Test
 	public void testWordsFinderDefault() {
-		WordsFinder.findWords(BASE_PUZZLE, dict);
+//		WordsFinder.findWords(BASE_PUZZLE);
 	}
 }
