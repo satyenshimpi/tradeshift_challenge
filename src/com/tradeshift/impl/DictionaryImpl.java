@@ -11,16 +11,16 @@ import com.tradeshift.Dictionary;
 /**
  * This is Trie implementation of Dictionary interface.
  * We will store all words a lower case letters in this Dictionary
- * @author Satyen Shimpi
+ * @author Satyen S Shimpi
  */
 public class DictionaryImpl implements Dictionary{
-	Node root = new Node('*');
+	DictionaryNode root = new DictionaryNode('*');
 	static Logger log = Logger.getLogger(DictionaryImpl.class.getName());
 	
 	@Override
 	public boolean isValidWord(String word) {
 		log.debug("Finding word: " + word);
-		Node n = root;
+		DictionaryNode n = root;
  		for(int i=0; i< word.length(); i++){
 			char charAt = word.charAt(i);
 			if(!n.getChildren().containsKey(charAt)){
@@ -35,7 +35,7 @@ public class DictionaryImpl implements Dictionary{
 	@Override
 	public boolean hasWordsFrom(String prefix){
 		log.debug("finding words from : " + prefix);
-		Node n = root;
+		DictionaryNode n = root;
  		for(int i=0; i< prefix.length(); i++){
 			char charAt = prefix.charAt(i);
 			if(!n.getChildren().containsKey(charAt)){
@@ -48,12 +48,12 @@ public class DictionaryImpl implements Dictionary{
 	
 	@Override
 	public void addWord(String str){
-		Node n = root;
+		DictionaryNode n = root;
 		str = str.toLowerCase();		// make all lowercase
 		for(int i=0; i< str.length(); i++){
 			char charAt = str.charAt(i);
 			if(!n.getChildren().containsKey(charAt)){
-				n.getChildren().put(str.charAt(i), new Node(str.charAt(i)));
+				n.getChildren().put(str.charAt(i), new DictionaryNode(str.charAt(i)));
 			}
 			n = n.getChildren().get(charAt);
 		}
@@ -73,7 +73,7 @@ public class DictionaryImpl implements Dictionary{
 		return sb.toString();
 	}
 	
-	private List<String> getWords(String prefix, Node n){
+	private List<String> getWords(String prefix, DictionaryNode n){
  		for(int i=0; i< prefix.length(); i++){
 			char charAt = prefix.charAt(i);
 			if(!n.getChildren().containsKey(charAt)){
@@ -90,12 +90,12 @@ public class DictionaryImpl implements Dictionary{
 	 * @param n
 	 * @return
 	 */
-	private List<String> findWordsFrom(String prefix, Node n){
+	private List<String> findWordsFrom(String prefix, DictionaryNode n){
 		List<String> ret = new LinkedList<String>();
 		if(n.isCompleteWord()){
 			ret.add(prefix);
 		}		
-		for(Node x : n.getChildren().values()){
+		for(DictionaryNode x : n.getChildren().values()){
 			String str = prefix + x.getPrefix();
 			List<String> tmp = findWordsFrom(str, x);
 			ret.addAll(tmp);

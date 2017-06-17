@@ -11,24 +11,15 @@ import com.tradeshift.WordsFinder.Type;
 import com.tradeshift.util.Helper;
 import com.tradeshift.util.WordsFinderFactory;
 
-/**
- * Test class for WordsFinderBasic
- * example char matrix
- * c a t 
- * a t o 
- * n e m 
- * has words cat, can, tom, ate
- * @author Satyen S Shimpi
- */
-public class TestMain extends TestBase {
-	static Logger log = Logger.getLogger(TestMain.class.getName());
-	
+public class WordsFinderCrissCross_Test extends TestBase {
+	static Logger log = Logger.getLogger(WordsFinderCrissCross_Test.class.getName());
+
 	@Test
-	public void testWordsFinderDefaultPuzzle() {
+	public void testWordsFinderGraph_DefaultPuzzle() {
 		log.debug(dict.toString());
-		Matrix matrix = Helper.getMatrixInstance(DEFAULT_PUZZLE, Type.BASIC);
+		Matrix matrix = Helper.getMatrixInstance(DEFAULT_PUZZLE, Type.CRISS_CROSS);
 		
-		WordsFinder wf = WordsFinderFactory.getInstance(Type.BASIC, dict, matrix);
+		WordsFinder wf = WordsFinderFactory.getInstance(Type.CRISS_CROSS, dict, matrix);
 		List<String> lst = wf.findWords();
 		
 		Helper.printMatrix(matrix);
@@ -39,11 +30,11 @@ public class TestMain extends TestBase {
 	}
 	
 	@Test
-	public void testWordsFinderBasePuzzle() {
+	public void testWordsFinderGraph_BasePuzzle() {
 		log.debug(dict.toString());
-		Matrix matrix = Helper.getMatrixInstance(BASE_PUZZLE, Type.BASIC);
+		Matrix matrix = Helper.getMatrixInstance(BASE_PUZZLE_CRISSCROSS, Type.CRISS_CROSS);
 		
-		WordsFinder wf = WordsFinderFactory.getInstance(Type.BASIC, dict, matrix);
+		WordsFinder wf = WordsFinderFactory.getInstance(Type.CRISS_CROSS, dict, matrix);
 		List<String> lst = wf.findWords();
 		
 		Helper.printMatrix(matrix);

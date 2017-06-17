@@ -1,11 +1,17 @@
 package com.tradeshift.util;
 
 import com.tradeshift.Matrix;
+import com.tradeshift.WordsFinder;
+import com.tradeshift.WordsFinder.Type;
 import com.tradeshift.impl.MatrixImpl;
+import com.tradeshift.impl.MatrixNodeArray;
 
 public class Helper {
 	
-	public static Matrix getMatrixInstance(String[] puzzle){
+	public static Matrix getMatrixInstance(String[] puzzle, WordsFinder.Type type){
+		if(type.equals(Type.CRISS_CROSS)){
+			return new MatrixNodeArray<Character>(Helper.createMatrix(puzzle));
+		}
 		return new MatrixImpl(puzzle);
 	}
 
@@ -13,10 +19,12 @@ public class Helper {
 	 * Converts String array to char[][] Matrix
 	 * @param arr String array
 	 */
-	public static char[][] createMatrix(String[] arr){
-		char[][] matrix = new char[arr.length][arr[0].length()];
+	public static Character[][] createMatrix(String[] arr){
+		Character[][] matrix = new Character[arr.length][arr[0].length()];
 		for(int i=0; i< arr.length; i++){
-			matrix[i] = arr[i].toCharArray();
+			for (int j = 0; j < arr[i].length(); j++) {
+				matrix[i][j] =  (Character) arr[i].charAt(j);
+			}
 		}
 		return matrix;
 	}
