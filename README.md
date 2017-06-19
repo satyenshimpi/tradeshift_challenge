@@ -1,4 +1,50 @@
 # tradeshift_challenge
+
+Solution contains following interfaces and classes
+## Interfaces
+* **Dictionary** - Dictionary of words
+* **Matrix** - Puzzle data holder
+* **WordsFinder** - Its implementation will define ways to find all words in puzzle
+
+## Implementations
+### WordsFinder
+* **WordsFinderBasic** - This implementation searches for words in following directions
+    - horizontally right
+    - vertically down
+    - diagonally down
+    > For Example following char matrix
+    ```
+    c a t 
+    a t o 
+    n e m
+    ``` 
+    > has words cat, can, tom, ate
+
+* **WordsFinderNodeArray** :+1: - This implementation helps find words in _**Criss Cross**_ way in **any direction** (up, down, right, left, diagonal, combination of all ) This implementation is favored over Basic implementation.
+    > Example char matrix
+    ```
+    a b c 
+    x a u
+    z s t
+    ```
+    > has words - abacus, cat, tab, cut, tax, cast ...
+
+### Dictionary
+* **DictionaryImpl** - This is Trie implementation of Dictionary interface. We will store all words a lower case letters in this Dictionary
+* **DictionaryNode** - Represents a Dictionary Node in Trie implementation
+
+### Matrix
+* **MatrixImpl** - Simple 2D character array type implementation of Matrix Interface. This is used in WordsFinderBasic
+* **MatrixNodeArray** - Matrix implementation to be used in WordsFinderNodeArray
+
+# Junit Test classes
+* **TestBase** - Base class for Junit tests. Here we first add words to dictionary so that they can be verified in the puzzle. If we don't add word to dictionary, it will not be printed out though the puzzle has the word. Also creates Default puzzles test cases.
+* **TestMain** - Test class for WordsFinderBasic
+* **WordsFinderCrissCross_Test** - Test class for WordsFinderCrissCross implementation
+
+
+
+## Problem Statement
 tradeshift offline challenge
 /**
  *  Words Finder
