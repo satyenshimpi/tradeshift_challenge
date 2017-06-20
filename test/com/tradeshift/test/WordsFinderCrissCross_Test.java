@@ -2,7 +2,8 @@ package com.tradeshift.test;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 
 import com.tradeshift.Matrix;
@@ -12,7 +13,7 @@ import com.tradeshift.util.Helper;
 import com.tradeshift.util.WordsFinderFactory;
 
 public class WordsFinderCrissCross_Test extends TestBase {
-	static Logger log = Logger.getLogger(WordsFinderCrissCross_Test.class.getName());
+	static Logger log = LogManager.getLogger(WordsFinderCrissCross_Test.class.getName());
 
 	@Test
 	public void testWordsFinderGraph_DefaultPuzzle() {

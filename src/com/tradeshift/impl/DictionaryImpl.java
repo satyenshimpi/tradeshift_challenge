@@ -4,7 +4,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.tradeshift.Dictionary;
 
@@ -15,7 +16,7 @@ import com.tradeshift.Dictionary;
  */
 public class DictionaryImpl implements Dictionary{
 	DictionaryNode root = new DictionaryNode('*');
-	static Logger log = Logger.getLogger(DictionaryImpl.class.getName());
+	static Logger log = LogManager.getLogger(DictionaryImpl.class.getName());
 	
 	@Override
 	public boolean isValidWord(String word) {

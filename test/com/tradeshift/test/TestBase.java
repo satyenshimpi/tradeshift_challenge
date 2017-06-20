@@ -1,6 +1,5 @@
 package com.tradeshift.test;
 
-import org.apache.log4j.BasicConfigurator;
 import org.junit.Before;
 
 import com.tradeshift.impl.DictionaryImpl;
@@ -119,15 +118,9 @@ public class TestBase {
 		dict.addWord("tab");
 		dict.addWord("net");
 		dict.addWord("abacus");
+		dict.addWord("tax");
+		dict.addWord("cast");
+		dict.addWord("cut");
 	}
 	
-	@Before
-	public void setUp(){
-		//log4j config basic
-		BasicConfigurator.configure();
-		
-		System.setProperty("java.util.logging.SimpleFormatter.format", 
-	            //"%1$tF %1$tT %4$s %2$s "+ 
-				"%5$s%6$s%n");
-	}
 }

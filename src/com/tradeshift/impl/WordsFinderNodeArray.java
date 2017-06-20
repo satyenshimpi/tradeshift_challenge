@@ -5,7 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.tradeshift.Dictionary;
 import com.tradeshift.WordsFinder;
@@ -22,7 +23,7 @@ import com.tradeshift.util.Constants;
  * @param <E>
  */
 public class WordsFinderNodeArray<E> implements WordsFinder{
-	private static Logger log = Logger.getLogger(WordsFinderNodeArray.class.getName());
+	private static Logger log = LogManager.getLogger(WordsFinderNodeArray.class.getName());
 	
 	private Dictionary dict;
 	private List<String> wordsFound;
