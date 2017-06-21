@@ -1,5 +1,10 @@
 package com.tradeshift.main;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,6 +18,7 @@ import com.tradeshift.WordsFinder;
 import com.tradeshift.WordsFinder.Type;
 import com.tradeshift.impl.DictionaryImpl;
 import com.tradeshift.ui.AppWindow;
+import com.tradeshift.util.Constants;
 import com.tradeshift.util.Helper;
 import com.tradeshift.util.WordsFinderFactory;
 
@@ -27,13 +33,49 @@ public class Application {
 	
 	public static void main(String[] args) {
 		populateDictionary();
+		System.out.println(dict.toString());
 		createAndShowGUI();
 		//Run console app if console is available
 		if(System.console() != null){
 			runFromConsole();
 		}
 	}
-
+	
+	/**
+     * Create the GUI for application.
+     */
+    private static void createAndShowGUI() {
+        //Create and set up the window.
+        final AppWindow frame = new AppWindow(dict);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+ 
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
+    }
+	
+    /**
+     * Populate Dictionary from dictionary file
+     */
+	private static void populateDictionary(){
+		FileReader fr;
+		try {
+			File f = new File(Constants.EN_US_DICTIONARY);
+			System.out.println(f.getAbsolutePath());
+			fr = new FileReader(f);
+			BufferedReader br = new BufferedReader(fr);
+			String line;
+			while( (line = br.readLine()) != null){
+				dict.addWord(line.trim());
+			}
+			br.close();
+		} catch (FileNotFoundException e) {
+			log.error("Could not find dictionary file", e);
+		} catch (IOException e) {
+			log.error("Exception", e);
+		}
+	}
+	
 	/**
 	 * If Console is available then we can have Console version of app
 	 */
@@ -61,103 +103,5 @@ public class Application {
 		}
 		sc.close();
 	}
-	
-	/**
-     * Create the GUI for application.
-     */
-    private static void createAndShowGUI() {
-        //Create and set up the window.
-        final AppWindow frame = new AppWindow(dict);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
- 
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-    }
-	
-	private static void populateDictionary(){
-		//few horizontal and vertical words
-		dict.addWord("shift");
-		dict.addWord("word");
-		dict.addWord("trade");
-		dict.addWord("fad");
-		dict.addWord("sad");
-		dict.addWord("java");
-		dict.addWord("fab");
-		dict.addWord("as");
-		dict.addWord("bed");
-		dict.addWord("avid");
-		
-		//diagonally right down words
-		dict.addWord("nav");
-		dict.addWord("did");
-		dict.addWord("bia");
-		dict.addWord("ide");
 
-		//diagonally left down words
-		dict.addWord("dad");
-		dict.addWord("add");
-		dict.addWord("via");
-		dict.addWord("en");
-		dict.addWord("babe");
-		
-		//horizontally lhs (left to right) words
-		dict.addWord("ans");
-		dict.addWord("jiav");
-		dict.addWord("daf");
-		dict.addWord("das");
-		dict.addWord("avaj");
-		dict.addWord("dba");
-		dict.addWord("row");
-		dict.addWord("gcc");
-		dict.addWord("bag");
-		
-		//vertically up (from bottom to up) words
-		dict.addWord("diva");
-		dict.addWord("fed");
-		dict.addWord("duru");
-		dict.addWord("buf");
-		dict.addWord("niva");
-		
-		//diagonally RHS upwards
-		dict.addWord("css");
-		dict.addWord("sadi");
-		dict.addWord("vba");
-		
-		//diagonally LHS upwards
-		dict.addWord("sai");
-		dict.addWord("ed");
-		dict.addWord("btw");
-		dict.addWord("");
-		
-		//criss-cross words
-		//adding only for debug purpose. These may not be reals words
-		dict.addWord("asdvbia");
-		dict.addWord("");
-		
-		//possible words
-		dict.addWord("ada");
-		dict.addWord("van");
-		dict.addWord("awk");
-		dict.addWord("bak");
-		
-
-		
-		//words for other basic puzzles
-		dict.addWord("cat");
-		dict.addWord("dog");
-		dict.addWord("bat");
-		dict.addWord("can");
-		dict.addWord("ate");
-		dict.addWord("tom");
-		
-		dict.addWord("anaa");
-		dict.addWord("tab");
-		dict.addWord("net");
-		dict.addWord("abacus");
-		dict.addWord("tax");
-		dict.addWord("cast");
-		dict.addWord("cut");
-	}
-	
 }
