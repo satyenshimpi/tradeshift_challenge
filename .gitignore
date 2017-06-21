@@ -1,1 +1,4 @@
 wrkspc/
+/.gradle/
+/build/
+/bin/
