@@ -42,7 +42,10 @@ Solution contains following interfaces and classes
 * **TestMain** - Test class for WordsFinderBasic
 * **WordsFinderCrissCross_Test** - Test class for WordsFinderCrissCross implementation
 
-
+# Building and Running
+* This project can be imported in eclipse as Gradle Project.
+* After bulding with gradle there is a task for running app (_gradlew run_)
+* It will show a GUI where we can enter matrix as list of strings and after clicking **Find words** we will get all the words in given matrix.
 
 ## Problem Statement
 tradeshift offline challenge
